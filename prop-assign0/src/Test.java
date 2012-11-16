@@ -14,20 +14,29 @@ public class Test {
 			Object[] expected = (Object[]) expecteds[n];
 
 			Scanner sc = new YourScannerImpl(new StringReader(expr));
-			Tokenizer to = new YourTokenizerImpl(sc);
-			Parser pa = new YourParserImpl(to);
-			Node root = pa.parse();
+			char currentChar = sc.current();
+			
+			do {
+				currentChar = sc.current();
+				System.out.println(currentChar);
+				if (sc.next() == 0) break;
+
+			} while (true);
+			
+			//Tokenizer to = new YourTokenizerImpl(sc);
+			//Parser pa = new YourParserImpl(to);
+			//Node root = pa.parse();
 //			System.out.println(expr);
 //			System.out.println(root.toTree());
 
-			Visitor v = new Visitor();
+			//Visitor v = new Visitor();
 
-			@SuppressWarnings("unchecked")
-			Map<String, Number> observed = (Map<String, Number>) v.visit(root);
-			System.out.println(observed);
-			System.out.println("Evaluated: '" + expr + "' Expected: '"
-					+ expected[0] + "'='" + expected[1] + "' Got: '"
-					+ observed.get(expected[0]) + "'");
+			//@SuppressWarnings("unchecked")
+			//Map<String, Number> observed = (Map<String, Number>) v.visit(root);
+			//System.out.println(observed);
+			//System.out.println("Evaluated: '" + expr + "' Expected: '"
+			//		+ expected[0] + "'='" + expected[1] + "' Got: '"
+			//		+ observed.get(expected[0]) + "'");
 		}
 
 	}
