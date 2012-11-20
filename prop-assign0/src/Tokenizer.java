@@ -7,7 +7,7 @@ public interface Tokenizer {
 	Token current();
 	
 	/**
-	 * Return the current token in the stream
+	 * Return the next token in the stream
 	 * 
 	 */
 	Token next();

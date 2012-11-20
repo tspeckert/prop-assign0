@@ -9,19 +9,25 @@ public class Test {
 		Object[] expecteds = new Object[] { new Object[] { "a", 3 },
 				new Object[] { "b", 3 }, new Object[] { "c", 7 }, new Object[] {"d", -165}};
 
-		for (int n = 0; n < exprs.length; n++) {
+		//for (int n = 0; n < exprs.length; n++) {
+		for (int n = 0; n < 1; n++) {
+			//System.out.println("exprs length is: " + exprs.length);
 			String expr = exprs[n];
 			Object[] expected = (Object[]) expecteds[n];
 
 			Scanner sc = new YourScannerImpl(new StringReader(expr));
-			char currentChar = sc.current();
+			//char currentChar = sc.current();
 			
-			do {
-				currentChar = sc.current();
-				System.out.println(currentChar);
-				if (sc.next() == 0) break;
-
-			} while (true);
+			for (;;) {
+				//System.out.println("Currently i is " + i);
+				//currentChar = sc.current();
+				System.out.println("Current character is: " + sc.current());
+				System.out.println("Peeked character is: " + sc.peek() + "\n");
+				if (sc.next() == 0) {
+					System.out.println("End of string");
+					break;
+				}
+			}
 			
 			//Tokenizer to = new YourTokenizerImpl(sc);
 			//Parser pa = new YourParserImpl(to);
