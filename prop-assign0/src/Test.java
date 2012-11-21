@@ -9,15 +9,30 @@ public class Test {
 		Object[] expecteds = new Object[] { new Object[] { "a", 3 },
 				new Object[] { "b", 3 }, new Object[] { "c", 7 }, new Object[] {"d", -165}};
 
-		//for (int n = 0; n < exprs.length; n++) {
-		for (int n = 0; n < 1; n++) {
+		for (int n = 0; n < exprs.length; n++) {
+		//for (int n = 0; n < 1; n++) {
 			//System.out.println("exprs length is: " + exprs.length);
 			String expr = exprs[n];
 			Object[] expected = (Object[]) expecteds[n];
 
-			Scanner sc = new YourScannerImpl(new StringReader(expr));
-			//char currentChar = sc.current();
+			System.out.println("Sentence is: " + expr);
 			
+			Scanner sc = new YourScannerImpl(new StringReader(expr));
+			Tokenizer to = new YourTokenizerImpl(sc);
+			
+			//tokenizer testing
+			for (;;) {
+				
+				System.out.println("Current Token is: " + to.current().text());
+				if (to.next().type() == Token.Type.EOF) {
+					System.out.println("EOF token found" + '\n');
+					break;
+				}
+			}
+			
+			
+			//char currentChar = sc.current();
+			/* Scanner testing
 			for (;;) {
 				//System.out.println("Currently i is " + i);
 				//currentChar = sc.current();
@@ -28,7 +43,8 @@ public class Test {
 					break;
 				}
 			}
-			
+			*/
+
 			//Tokenizer to = new YourTokenizerImpl(sc);
 			//Parser pa = new YourParserImpl(to);
 			//Node root = pa.parse();

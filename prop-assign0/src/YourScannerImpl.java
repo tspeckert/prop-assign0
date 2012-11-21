@@ -45,6 +45,7 @@ public class YourScannerImpl implements Scanner {
 		
 		//check to see if the end of the string has been reached
 		if (c == -1) {
+			currentChar = EOF;
 			return EOF;
 		}
 		
