@@ -19,9 +19,15 @@ public class YourScannerImpl implements Scanner {
 			currentExpr.mark(1);
 			currentChar = (char) c;
 		} catch (IOException error){
-
+			System.out.println("Error with reading the string. Quitting.");
+			System.exit(2);
 		}
 	
+	}
+	
+	public YourScannerImpl(YourScannerImpl scanner) {
+		currentExpr = scanner.currentExpr;
+		currentChar = scanner.currentChar;
 	}
 
 	@Override

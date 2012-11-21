@@ -17,13 +17,14 @@ public class Test {
 
 			System.out.println("Sentence is: " + expr);
 			
-			Scanner sc = new YourScannerImpl(new StringReader(expr));
+			YourScannerImpl sc = new YourScannerImpl(new StringReader(expr));
 			Tokenizer to = new YourTokenizerImpl(sc);
 			
 			//tokenizer testing
 			for (;;) {
 				
 				System.out.println("Current Token is: " + to.current().text());
+				System.out.println("Peeked Token should be: " + to.peek().text());
 				if (to.next().type() == Token.Type.EOF) {
 					System.out.println("EOF token found" + '\n');
 					break;

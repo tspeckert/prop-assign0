@@ -1,14 +1,14 @@
 
 public class YourTokenizerImpl implements Tokenizer {
-	private Scanner sc;
+	private YourScannerImpl sc;
 	private Token currentToken;
 
-	public YourTokenizerImpl(Scanner scanner) {
+	public YourTokenizerImpl(YourScannerImpl scanner) {
 		sc = scanner;
 		
 		try {
 			currentToken = extractToken();
-			System.out.println("Tokenizer initialized. First token is: " + currentToken.text());
+			//System.out.println("Tokenizer initialized. First token is: " + currentToken.text());
 		} catch (Exception e){
 			System.out.println("Error parsing token. Not a valid program. Quitting.");
 			System.exit(1);
@@ -132,8 +132,11 @@ public class YourTokenizerImpl implements Tokenizer {
 
 	@Override
 	public Token peek() {
-		// TODO Auto-generated method stub
-		return null;
+		// duplicate the scanner object and make a new tokenizer object in order to "peek" ahead without changing position
+		YourScannerImpl peekSc = new YourScannerImpl(sc);
+		Tokenizer peekTo = new YourTokenizerImpl(peekSc);
+		
+		return peekTo.current();
 	}
 
 }
