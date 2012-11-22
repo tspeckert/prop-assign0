@@ -15,20 +15,8 @@ public class YourTokenizerImpl implements Tokenizer {
 		}
 	}
 
-	/*
-	 * string of chars == id
-	 * integer == factor
-	 * (
-	 * )
-	 * =
-	 * + 
-	 * -
-	 * *
-	 * /
-	 * EOF
-	 */
 
-	
+	//method extracts a single token
 	private Token extractToken(boolean peeking) throws Exception {
 		Character ch = sc.current();
 		Token tempToken;
@@ -36,6 +24,8 @@ public class YourTokenizerImpl implements Tokenizer {
 		//deal with whitespace
 		if (Character.isWhitespace(ch)) {
 			while (Character.isWhitespace(ch))  {
+				
+				//either peek ahead in the scanner if we are peeking, otherwise use Scanner.next()
 				if (peeking) ch = sc.peek();
 				else ch = sc.next();
 			}
