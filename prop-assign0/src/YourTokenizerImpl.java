@@ -7,7 +7,7 @@ public class YourTokenizerImpl implements Tokenizer {
 		sc = scanner;
 		
 		try {
-			currentToken = extractToken();
+			currentToken = extractToken(false);
 			//System.out.println("Tokenizer initialized. First token is: " + currentToken.text());
 		} catch (Exception e){
 			System.out.println("Error parsing token. Not a valid program. Quitting.");
@@ -27,14 +27,18 @@ public class YourTokenizerImpl implements Tokenizer {
 	 * /
 	 * EOF
 	 */
+
 	
-	private Token extractToken() throws Exception {
+	private Token extractToken(boolean peeking) throws Exception {
 		Character ch = sc.current();
 		Token tempToken;
 		
 		//deal with whitespace
 		if (Character.isWhitespace(ch)) {
-			while (Character.isWhitespace(ch))  ch = sc.next();
+			while (Character.isWhitespace(ch))  {
+				if (peeking) ch = sc.peek();
+				else ch = sc.next();
+			}
 		}
 		
 		//deal with numbers
@@ -43,7 +47,9 @@ public class YourTokenizerImpl implements Tokenizer {
 			numberBuilder.append(ch);
 			
 			for (;;) {
-				ch = sc.next();
+				if (peeking) ch = sc.peek();
+				else ch = sc.next();
+				
 				if (Character.isDigit(ch)) {
 					numberBuilder.append(ch);
 				} else if (Character.isWhitespace(ch)){
@@ -63,7 +69,9 @@ public class YourTokenizerImpl implements Tokenizer {
 			idBuilder.append(ch);
 			
 			for (;;) {
-				ch = sc.next();
+				if (peeking) ch = sc.peek();
+				else ch = sc.next();
+				
 				if (Character.isLowerCase(ch)) {
 					idBuilder.append(ch);
 				} else if (Character.isWhitespace(ch)){
@@ -108,10 +116,11 @@ public class YourTokenizerImpl implements Tokenizer {
 			default: throw new Exception ("Not a valid token.");
 		
 		}
-		sc.next();
+		if (peeking) ch = sc.peek();
+		else ch = sc.next();
+		
 		return tempToken;
 	}
-	
 	
 	@Override
 	public Token current() {
@@ -122,9 +131,9 @@ public class YourTokenizerImpl implements Tokenizer {
 	@Override
 	public Token next() {
 		try {
-			currentToken = extractToken();
+			currentToken = extractToken(false);
 		} catch (Exception e){
-			System.out.println("Error parsing token. Not a valid program. Quitting.");
+			System.out.println("Error extracting token. Not a valid program. Quitting.");
 			System.exit(1);
 		}
 		return currentToken;
@@ -132,11 +141,16 @@ public class YourTokenizerImpl implements Tokenizer {
 
 	@Override
 	public Token peek() {
-		// duplicate the scanner object and make a new tokenizer object in order to "peek" ahead without changing position
-		YourScannerImpl peekSc = new YourScannerImpl(sc);
-		Tokenizer peekTo = new YourTokenizerImpl(peekSc);
-		
-		return peekTo.current();
+		Token peekedToken;
+		try {
+			return extractToken(true);
+			
+		} catch (Exception e){
+			System.out.println("Error extracting token. Not a valid program. Quitting.");
+			System.exit(1);
+		}
+		peekedToken = new Token(null,null,null);
+		return peekedToken;
 	}
 
 }

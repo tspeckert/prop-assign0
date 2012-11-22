@@ -25,11 +25,6 @@ public class YourScannerImpl implements Scanner {
 	
 	}
 	
-	public YourScannerImpl(YourScannerImpl scanner) {
-		currentExpr = scanner.currentExpr;
-		currentChar = scanner.currentChar;
-	}
-
 	@Override
 	public char current() {
 		return currentChar;
@@ -39,6 +34,9 @@ public class YourScannerImpl implements Scanner {
 	public char next() {
 		int c = 0;
 		try {
+			//reset our position in the string back to where we were before peek was called
+			currentExpr.reset();
+			
 			//read the next char, save it to a local var, and move to the next position in the string
 			c = currentExpr.read(); 
 			
@@ -66,11 +64,9 @@ public class YourScannerImpl implements Scanner {
 		try {
 			//read the next char, save it to a local var,
 			c = currentExpr.read();
-			
-			//reset our position in the string back to where we were before peek was called
-			currentExpr.reset();
 		} catch (IOException error){
-			return (char) -1;
+			System.out.println("Reading error. Quitting.");
+			System.exit(3);
 		}
 		
 		if (c == -1) {
