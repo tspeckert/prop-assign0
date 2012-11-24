@@ -9,8 +9,8 @@ public class Test {
 		Object[] expecteds = new Object[] { new Object[] { "a", 3 },
 				new Object[] { "b", 3 }, new Object[] { "c", 7 }, new Object[] {"d", -165}};
 
-		//for (int n = 0; n < exprs.length; n++) {
-		for (int n = 2; n < 3; n++) {
+		for (int n = 0; n < exprs.length; n++) {
+		//for (int n = 3; n < 4; n++) {
 			//System.out.println("exprs length is: " + exprs.length);
 			String expr = exprs[n];
 			Object[] expected = (Object[]) expecteds[n];
@@ -24,7 +24,7 @@ public class Test {
 			//tokenizer testing
 			Node parseTree = pa.parse();
 			
-			System.out.println(parseTree.toTree());
+			System.out.println(parseTree.toTree() + '\n');
 			
 			//tokenizer testing
 			//for (;;) {

@@ -43,7 +43,7 @@ public class YourParserImpl implements Parser {
 
 			//treat the possibly repeating expression by calling parse expression again
 			node.right = this.parseExpression();
-		} else {
+		} else if (t.type()!=Token.Type.RIGHT_PAREN) { //we can encounter a right parenthesis here if we are parsing an expr surrounded by brackets
 			throw new RuntimeException("Not a valid Expression");
 		}
 		
@@ -67,7 +67,9 @@ public class YourParserImpl implements Parser {
 			to.next(); //need to move to the beginning of the factor 
 			node.right = this.parseFactor();
 			to.next(); 
-		} else if (!(op.type() == Token.Type.PLUS || op.type() == Token.Type.MINUS )) {
+		} else if (!(op.type() == Token.Type.PLUS ||  //possible characters we could encounter
+				op.type() == Token.Type.MINUS ||
+				op.type() == Token.Type.RIGHT_PAREN)) {
 			throw new RuntimeException("Not a valid Term");
 		}
 		
@@ -85,7 +87,8 @@ public class YourParserImpl implements Parser {
 			node.node = n;
 		} else if (t.type() == Token.Type.LEFT_PAREN) {
 			node.node = this.parseExpression();
-			t = to.next();
+			
+			t = to.current(); //update t to the tokenizer's position
 			
 			if (t.type() != Token.Type.RIGHT_PAREN) 
 				throw new RuntimeException("Not a valid Factor, ')' expected.");
