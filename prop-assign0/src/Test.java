@@ -5,12 +5,12 @@ import java.util.Map;
 public class Test {
 
 	public static void main(String[] args) throws Exception {
-		String[] exprs = new String[] { "a = 1 + 2", "b= 1+ 2", "c=1*2+11/2", "d=(2+3)-(10*(20-3))" };
+		String[] exprs = new String[] { "a = 1 + 2 + 3 + 4", "b= 1+ 2", "c=1*2+11/2", "d=(2+3)-(10*(20-3))" };
 		Object[] expecteds = new Object[] { new Object[] { "a", 3 },
 				new Object[] { "b", 3 }, new Object[] { "c", 7 }, new Object[] {"d", -165}};
 
-		for (int n = 0; n < exprs.length; n++) {
-		//for (int n = 0; n < 1; n++) {
+		//for (int n = 0; n < exprs.length; n++) {
+		for (int n = 2; n < 3; n++) {
 			//System.out.println("exprs length is: " + exprs.length);
 			String expr = exprs[n];
 			Object[] expected = (Object[]) expecteds[n];
@@ -22,7 +22,9 @@ public class Test {
 			Parser pa = new YourParserImpl (to);
 			
 			//tokenizer testing
-			pa.parse();
+			Node parseTree = pa.parse();
+			
+			System.out.println(parseTree.toTree());
 			
 			//tokenizer testing
 			//for (;;) {
