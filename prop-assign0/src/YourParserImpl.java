@@ -52,9 +52,7 @@ public class YourParserImpl implements Parser {
 	
 	private Node parseTerm  () {
 		TermNode node = new TermNode();
-		
-		Token lhs = to.current();
-		
+				
 		node.left = this.parseFactor();
 		
 		Token op = to.next();
@@ -65,8 +63,8 @@ public class YourParserImpl implements Parser {
 		} else if (op.type() == Token.Type.MULT || op.type() == Token.Type.DIV ) {
 			node.operator = op.text();
 			to.next(); //need to move to the beginning of the factor 
-			node.right = this.parseFactor();
-			to.next(); 
+			node.right = this.parseTerm();
+			//to.next(); 
 		} else if (!(op.type() == Token.Type.PLUS ||  //possible characters we could encounter
 				op.type() == Token.Type.MINUS ||
 				op.type() == Token.Type.RIGHT_PAREN)) {

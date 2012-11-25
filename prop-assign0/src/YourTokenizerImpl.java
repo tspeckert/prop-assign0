@@ -1,9 +1,9 @@
 
 public class YourTokenizerImpl implements Tokenizer {
-	private YourScannerImpl sc;
+	private Scanner sc;
 	private Token currentToken;
 
-	public YourTokenizerImpl(YourScannerImpl scanner) {
+	public YourTokenizerImpl(Scanner scanner) {
 		sc = scanner;
 		
 		try {
