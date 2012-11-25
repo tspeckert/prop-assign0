@@ -1,6 +1,12 @@
 import java.io.StringReader;
 import java.io.IOException;
 
+/*
+ * @author Thomas Speckert, Shah Faisal Darwaish
+ * 
+ * PROP Winter 2012 Assignment 0
+ */
+
 public class YourScannerImpl implements Scanner {
 	public static final char EOF = (char)0;
 	public static final char EOL = '\n';

@@ -1,5 +1,10 @@
 import java.util.*;
-import java.nio.charset.*;
+
+/*
+ * @author Thomas Speckert, Shah Faisal Darwaish
+ * 
+ * PROP Winter 2012 Assignment 0
+ */
 
 public class Visitor {
 
