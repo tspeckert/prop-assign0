@@ -1,7 +1,6 @@
 import java.io.StringReader;
 import java.io.IOException;
 
-
 public class YourScannerImpl implements Scanner {
 	public static final char EOF = (char)0;
 	public static final char EOL = '\n';
@@ -15,6 +14,7 @@ public class YourScannerImpl implements Scanner {
 		
 		int c = 0;
 		try {
+			//initialize the scanner by reading the first term and marking the position
 			c = currentExpr.read();
 			currentExpr.mark(1);
 			currentChar = (char) c;
@@ -59,6 +59,7 @@ public class YourScannerImpl implements Scanner {
 	}
 
 	@Override
+	//allows us to peek multiple chars
 	public char peek() {
 		int c = 0;
 		try {

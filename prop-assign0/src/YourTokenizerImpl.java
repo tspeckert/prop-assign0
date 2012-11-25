@@ -17,6 +17,7 @@ public class YourTokenizerImpl implements Tokenizer {
 
 
 	//method extracts a single token
+	//parameter peeking is used to determine if we are peeking or not
 	private Token extractToken(boolean peeking) throws Exception {
 		Character ch = sc.current();
 		Token tempToken;
@@ -25,7 +26,7 @@ public class YourTokenizerImpl implements Tokenizer {
 		if (Character.isWhitespace(ch)) {
 			while (Character.isWhitespace(ch))  {
 				
-				//either peek ahead in the scanner if we are peeking, otherwise use Scanner.next()
+				//either Scanner.peek() if we are peeking, otherwise use Scanner.next()
 				if (peeking) ch = sc.peek();
 				else ch = sc.next();
 			}
@@ -33,8 +34,8 @@ public class YourTokenizerImpl implements Tokenizer {
 		
 		//deal with numbers
 		if (Character.isDigit(ch)) {
-			StringBuilder numberBuilder = new StringBuilder();
-			numberBuilder.append(ch);
+			StringBuilder numberBuilder = new StringBuilder(); //used to build a string of numbers 1 char at a time
+			numberBuilder.append(ch); //add the character to the string
 			
 			for (;;) {
 				if (peeking) ch = sc.peek();
@@ -43,9 +44,11 @@ public class YourTokenizerImpl implements Tokenizer {
 				if (Character.isDigit(ch)) {
 					numberBuilder.append(ch);
 				} else if (Character.isWhitespace(ch)){
-					return new Token (numberBuilder.toString(), new Integer (numberBuilder.toString()), Token.Type.NUMBER);
+					//we now have a token
+					return new Token (numberBuilder.toString(), new Integer (numberBuilder.toString()), Token.Type.NUMBER); 
 				} else {
-					if (ch == '(' || ch == ')' || ch == '+' || ch == '-' || ch == '=' || ch == '*' || ch == '/' || ch == Scanner.EOF)
+					if (ch == '(' || ch == ')' || ch == '+' || ch == '-' || 
+							ch == '=' || ch == '*' || ch == '/' || ch == Scanner.EOF)
 						return new Token (numberBuilder.toString(), new Integer (numberBuilder.toString()), Token.Type.NUMBER);
 					else	
 						throw new Exception ("Not a valid token.");
@@ -76,7 +79,7 @@ public class YourTokenizerImpl implements Tokenizer {
 			
 		}
 		
-		//deal with rest of the tokens
+		//deal with rest of the tokens (the operators and the end of the sentence
 		switch (ch) {
 		
 			case '(':  
@@ -121,6 +124,8 @@ public class YourTokenizerImpl implements Tokenizer {
 	@Override
 	public Token next() {
 		try {
+			//call extractToken with the peeking parameter set to false (since this is next)
+			//and update the current token
 			currentToken = extractToken(false);
 		} catch (Exception e){
 			System.out.println("Error extracting token. Not a valid program. Quitting.");
@@ -130,15 +135,19 @@ public class YourTokenizerImpl implements Tokenizer {
 	}
 
 	@Override
+	//allows us to peek 1 token ahead
 	public Token peek() {
 		Token peekedToken;
 		try {
+			//return the peeked token
 			return extractToken(true);
 			
 		} catch (Exception e){
 			System.out.println("Error extracting token. Not a valid program. Quitting.");
 			System.exit(1);
 		}
+		//will never get here
+		//our error handling should probably be improved on 
 		peekedToken = new Token(null,null,null);
 		return peekedToken;
 	}
